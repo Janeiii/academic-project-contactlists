@@ -8,17 +8,33 @@ import java.util.*;
 public class ContactList {
 	
 	// Add instance variables here
-	
-    public boolean createContact(Person person) {
-        return true
+    private BSTree<Person> tree;
+    private BSTree<String> nameTree;
+
+    public ContactList() {
+        this.tree = new BSTree<Person>();
+        this.nameTree = new BSTree<String>();
     }
 
-    public boolean lookupContact(String name) {
+    public boolean createContact(Person person) {
+        if (lookupContact(person.getName())) {
+            return false;
+        }
+        this.tree.insert(person);
+        this.nameTree.insert(person.getName());
         return true;
     }
 
+    public boolean lookupContact(String name) {
+        return this.nameTree.contains(name);
+    }
+
     public Person getContact(String name) {
-        return null;
+        if (!this.nameTree.contains(name))
+            return null;
+        else {
+
+        }
     }
 
     public Person[] getContactByRange(String start, String end) {
