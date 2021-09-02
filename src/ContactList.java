@@ -96,8 +96,6 @@ public class ContactList {
 
         private int nelems; // number of elements stored
         private BSTNode root; // reference to root node
-        private String postOrderString;
-        private String preOrderString;
         private String inOrderString;
         private ArrayList<T> order;
 

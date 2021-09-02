@@ -300,7 +300,6 @@ public class Person{
             return current;
         }
 
-
         public ArrayList<T> printInOrder() {
             inOrderHelper(this.root);
             return this.order;
