@@ -16,7 +16,6 @@ public class Person{
 
         this.name = name;
         this.tree = new BSTree<String>();
-        this.pnArray = pnArray;
 
         for (String i : pnArray) {
             this.tree.insert(i);
@@ -25,10 +24,6 @@ public class Person{
 
     public String getName() {
         return this.name;
-    }
-
-    public ArrayList<String> getpnArray() {
-        return this.pnArray;
     }
 
     public boolean addPhoneNumber(String pn) {
@@ -59,8 +54,6 @@ public class Person{
 
     public class BSTree<T extends Comparable<? super T>>{
 
-        /* * * * * BST Instance Variables * * * * */
-
         private int nelems; // number of elements stored
         private BSTNode root; // reference to root node
         private String postOrderString;
@@ -68,93 +61,30 @@ public class Person{
         private String inOrderString;
         private ArrayList<T> order;
 
-
-        /* * * * * BST Node Inner Class * * * * */
-
         protected class BSTNode {
 
             T key;
             BSTNode left;
             BSTNode right;
 
-            /**
-             * A constructor that initializes the BSTNode instance variables.
-             *
-             * @param left  Left child
-             * @param right Right child
-             * @param key   Node's key
-             */
             public BSTNode(BSTNode left, BSTNode right, T key) {
                 this.left = left;
                 this.right = right;
                 this.key = key;
             }
 
-            /**
-             * Return the key
-             *
-             * @return The key
-             */
             public T getKey() {
                 return this.key;
             }
 
-            /**
-             * Return the left child of the node
-             *
-             * @return The left child of the node
-             */
-            public BSTNode getLeft() {
-                return this.left;
-            }
-
-            /**
-             * Return the right child of the node
-             *
-             * @return The right child of the node
-             */
-            public BSTNode getRight() {
-                return this.right;
-            }
-
-
-            /**
-             * Setter for left child of the node
-             *
-             * @param newLeft New left child
-             */
-            public void setLeft(BSTNode newLeft) {
-                this.left = newLeft;
-            }
-
-            /**
-             * Setter for right child of the node
-             *
-             * @param newRight New right child
-             */
-            public void setRight(BSTNode newRight) {
-                this.right = newRight;
-            }
-
         }
 
-        /* * * * * BST Methods * * * * */
-
-        /**
-         * 0-arg constructor that initializes root to null and nelems to 0
-         */
         public BSTree() {
             this.root = null;
             this.nelems = 0;
             this.order = new ArrayList<T>();
 
         }
-
-        /**
-         * Return the root of BSTree. Returns null if the tree is empty
-         *
-         * @return The root of BSTree, null if the tree is empty
-         */
         public BSTNode getRoot() {
             if ((this.root) == null)
                 return null;
@@ -214,14 +144,6 @@ public class Person{
             return true;
         }
 
-        /**
-         * Return true if the tree contains the 'key', false
-         * otherwise
-         *
-         * @param key To be searched
-         * @return True if the 'key' is found, false otherwise
-         * @throws NullPointerException If key is null
-         */
         public boolean contains(T key) {
 
             if (key == null)
@@ -240,13 +162,6 @@ public class Person{
             return false;
         }
 
-        /**
-         * Remove the key from the BST
-         *
-         * @param key To be removed
-         * @return True if the 'key' is removed, false otherwise
-         * @throws NullPointerException If key is null
-         */
         public boolean remove(T key) {
             if (key == null)
                 throw new NullPointerException();
@@ -280,12 +195,6 @@ public class Person{
             return node;
         }
 
-        /**
-         * Returns the smallest node from a given node
-         *
-         * @param root Smallest node will be found from this node
-         * @return The smallest node from the 'root' node
-         */
         private BSTNode findMin(BSTNode root) {
 
             // Instance initialization
