@@ -41,12 +41,13 @@ public class ContactList {
     }
 
     public Person[] getContactByRange(String start, String end) {
-        if(start == null || end == null || start.compareTo(end) < 0){
+        if(start == null || end == null || start.compareTo(end) >= 0){
             throw new IllegalArgumentException();
         }
+
         ArrayList<Person> list = new ArrayList<>();
         for (String i : this.map.keySet()) {
-            if(start.compareTo(i) <= 0 &&end.compareTo(i) < 0){
+            if( (start.compareTo(i) <= 0 ) && (end.compareTo(i) < 0) ){
                 list.add(this.map.get(i));
             }
         }
