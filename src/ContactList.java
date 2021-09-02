@@ -395,8 +395,10 @@ public class ContactList {
         }
 
         public ArrayList<T> printInOrder() {
+            this.order = new ArrayList<T>();
+
             if (this.root == null)
-                return new ArrayList<>();
+                return new ArrayList<T>();
             inOrderHelper(this.root);
             return this.order;
         }
