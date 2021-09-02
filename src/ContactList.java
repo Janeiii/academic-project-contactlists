@@ -41,15 +41,16 @@ public class ContactList {
     }
 
     public Person[] getContactByRange(String start, String end) {
-
+        if(end.compareTo(start)==-1){
+            throw new IllegalArgumentException();
+        }
+        ArrayList<Person> list = new ArrayList<>();
         for (String i : this.map.keySet()) {
-
-            if (i.substring(0,start.length()).compareTo(start) >= 0) {
-                System.out.println(1);
+            if(start.compareTo(i)!=1&&end.compareTo(i)!=-1){
+                list.add(this.map.get(i));
             }
         }
-
-        return null;
+        return list.toArray(new Person[list.size()]);
     }
 
     public boolean deleteContact(String name) {
@@ -76,12 +77,13 @@ public class ContactList {
     }
 
     public String[] fetchAllPhoneNumbers() {
-
-        ArrayList<ArrayList<String>> temp = new ArrayList<>();
-        for (Person i: this.map.values()) {
+        ArrayList<ArrayList> temp = new ArrayList<>();
+        for (Person i : this.map.values()) {
             temp.add(i.getPhoneNumbers());
         }
         String ans[]=temp.toArray(new String[temp.size()]);
+        Arrays.sort(ans);
         return ans;
     }
+
 }
