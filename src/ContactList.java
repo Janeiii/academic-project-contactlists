@@ -87,15 +87,14 @@ public class ContactList {
         String[] ans = temp.toArray(new String[temp.size()]);
         return ans;
     }
-
-
-
-    public class BSTree<T extends Comparable<? super T>> {
+    public class BSTree<T extends Comparable<? super T>> implements Iterable {
 
         /* * * * * BST Instance Variables * * * * */
 
         private int nelems; // number of elements stored
         private BSTNode root; // reference to root node
+        private String postOrderString;
+        private String preOrderString;
         private String inOrderString;
         private ArrayList<T> order;
 
@@ -218,7 +217,7 @@ public class ContactList {
             // Case for if the tree was empty
             if (this.root == null) {
 
-                this.root = new BSTNode(null, null, key);
+                this.root = new BSTNode(null,null,key);
 
             } else { // If the tree was not empty
 
@@ -235,9 +234,9 @@ public class ContactList {
                 }
 
                 if (key.compareTo(pre.getKey()) < 0)
-                    pre.left = new BSTNode(null, null, key);
+                    pre.left = new BSTNode(null,null,key);
                 else
-                    pre.right = new BSTNode(null, null, key);
+                    pre.right = new BSTNode(null,null,key);
 
             }
             this.nelems++;
@@ -257,15 +256,11 @@ public class ContactList {
             if (key == null)
                 throw new NullPointerException();
 
-            BSTNode current = this.root;
+            Iterator<T> iter = this.iterator();
 
-            while (current != null) {
-                if (current.getKey() == key)
+            while(iter.hasNext()){
+                if (iter.next() == key)
                     return true;
-                else if (current.getKey().compareTo(key) > 0)
-                    current = current.left;
-                else if (current.getKey().compareTo(key) < 0)
-                    current = current.right;
             }
             return false;
         }
@@ -296,7 +291,7 @@ public class ContactList {
                 return node;
 
             if (key.compareTo(node.key) < 0)
-                node.left = removeHelper(node.left, key);
+                node.left = removeHelper(node.left,key);
             else if (key.compareTo(node.key) > 0)
                 node.right = removeHelper(node.right, key);
             else {
@@ -330,20 +325,210 @@ public class ContactList {
             return current;
         }
 
-        public ArrayList<T> printInOrder() {
-            inOrderHelper(this.root);
-            return this.order;
+        /**
+         * Print the BST nodes by preorder traversal
+         *
+         * @return string of keys in preorder, separated by a single space (“ ”).
+         */
+        public String printPreOrder(){
+            if (this.root == null)
+                return "";
+
+            this.preOrderString = "";
+            printPreOrderHelper(this.root);
+            this.preOrderString = this.preOrderString.substring(0,this.preOrderString.length() - 1);
+            System.out.println(this.preOrderString);
+            return this.preOrderString;
         }
 
-        private void inOrderHelper(BSTNode node) {
+        /**
+         * Helper function to recursively call printPostOrder to print
+         * @param node to be the root for recursion
+         */
+        private void printPreOrderHelper(BSTNode node) {
 
             // Base case to stop recursion
             if (node == null)
                 return;
-            inOrderHelper(node.left);
-            this.order.add(node.getKey());
-            inOrderHelper(node.right);
 
+            this.preOrderString += node.getKey() + " ";
+            printPreOrderHelper(node.left);
+            printPreOrderHelper(node.right);
+
+        }
+
+        /**
+         * Print the BST nodes by postorder traversal
+         *
+         * @return string of keys in postorder, separated by a single space (“ ”).
+         */
+        public String printPostOrder(){
+            if (this.root == null)
+                return "";
+
+            this.postOrderString = "";
+            printPostOrderHelper(this.root);
+            this.postOrderString = this.postOrderString.substring(0,this.postOrderString.length() - 1);
+            System.out.println(this.postOrderString);
+            return this.postOrderString;
+
+        }
+
+        /**
+         * Helper function to recurssively call printPostOrder to print
+         * @param node to be the root for recursion
+         */
+        private void printPostOrderHelper(BSTNode node) {
+
+            // Base case to stop recursion
+            if (node == null)
+                return;
+
+            printPostOrderHelper(node.left);
+            printPostOrderHelper(node.right);
+            this.postOrderString += node.getKey() + " ";
+        }
+
+        /**
+         * Print the BST nodes by inorder traversal
+         *
+         * @return string of keys in inorder, separated by a single space (“ ”).
+         */
+        public ArrayList<T> printInOrder(){
+
+            Iterator<T> iter = this.iterator();
+            this.order = new ArrayList<T>();
+
+            StringBuilder ans = new StringBuilder();
+            // Case for if the tree is empty
+            if (this.root == null)
+                return new ArrayList<T>();
+            else {
+                // Else iterate through the tree and print
+                while (iter.hasNext()){
+                    T elem = iter.next();
+                    this.order.add(elem);
+                    ans.append(elem.toString() + " ");
+                }
+
+                this.inOrderString = ans.toString();
+                this.inOrderString = this.inOrderString.substring(0,this.inOrderString.length() - 1);
+                System.out.println(this.inOrderString);
+                return this.order;
+            }
+        }
+
+        /**
+         * Return the height of the tree
+         *
+         * @return The height of the tree, -1 if BST is empty
+         */
+        public int findHeight() {
+            // If the tree was empty
+            if (this.getSize() == 0)
+                return 0;
+
+            return findHeightHelper(this.root);
+
+        }
+
+        /**
+         * Helper for the findHeight method
+         *
+         * @param root Root node
+         * @return The height of the tree, -1 if BST is empty
+         */
+        private int findHeightHelper(BSTNode root) {
+            if (root == null)
+                return 0;
+
+            if (root.left == null && root.right == null)
+                return  1;
+
+            else {
+                int left_depth = findHeightHelper(root.left);
+                int right_depth = findHeightHelper(root.right);
+
+                if (left_depth > right_depth)
+                    return (left_depth + 1);
+                else
+                    return (right_depth+1);
+            }
+        }
+
+        /* * * * * BST Iterator * * * * */
+
+        /**
+         * Class BSTree_Iterator
+         */
+        public class BSTree_Iterator implements Iterator<T> {
+
+            // Instance initialization
+            Stack<BSTNode> tree;
+            BSTNode current;
+
+            /**
+             * Constructor for BSTree_Iterator
+             */
+            public BSTree_Iterator() {
+
+                // Instance initialization
+                this.tree = new Stack<BSTNode>();
+                this.current = BSTree.this.root;
+
+                while (this.current != null) {
+                    this.tree.push(this.current);
+                    if (this.current.left != null)
+                        this.current = this.current.left;
+                    else
+                        break;
+                }
+            }
+
+            /**
+             * Methods to check if the iterator has a valid next node to iterate
+             * @return true if had, false otherwise
+             */
+            public boolean hasNext() {
+                return !this.tree.isEmpty();
+            }
+
+            /**
+             * Returns the next item in the BST
+             * @return the next item
+             * @throws NoSuchElementException is there is no next item
+             */
+            public T next() {
+                // Throw NoSuchElementException is there is no next item
+                if (!this.hasNext())
+                    throw new NoSuchElementException();
+
+                // Pop a node from the Stack and temporarily stores the item at the node
+                BSTNode node = this.tree.pop();
+                BSTNode current = node;
+
+                // Traverse through the tree
+                if (current.right != null) {
+                    current = current.right;
+                    while(current != null) {
+                        this.tree.push(current);
+                        if(current.left != null)
+                            current = current.left;
+                        else
+                            break;
+                    }
+                }
+                return node.getKey();
+
+            }
+        }
+
+        /**
+         * Return the next object
+         * @return a new object
+         */
+        public Iterator<T> iterator() {
+            return new BSTree_Iterator();
         }
     }
 }
