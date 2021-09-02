@@ -77,12 +77,15 @@ public class ContactList {
     }
 
     public String[] fetchAllPhoneNumbers() {
-        ArrayList<ArrayList> temp = new ArrayList<>();
+        BSTree<String> allPhone = new BSTree<>();
+        ArrayList<String> temp = new ArrayList<>();
         for (Person i : this.map.values()) {
-            temp.add(i.getPhoneNumbers());
+            for (String phone: i.getPhoneNumbers()) {
+                allPhone.insert(phone);
+            }
         }
-        String ans[]=temp.toArray(new String[temp.size()]);
-        Arrays.sort(ans);
+        temp = allPhone.printInOrder();
+        String[] ans = temp.toArray(new String[temp.size()]);
         return ans;
     }
 

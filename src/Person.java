@@ -41,10 +41,6 @@ public class Person{
     public ArrayList<String> getPhoneNumbers() {
 
         ArrayList<String> temp = this.tree.printInOrder();
-        for (String i :temp)
-            System.out.println(i);
-        System.out.println(temp.size());
-
         return temp;
     }
 
