@@ -41,7 +41,7 @@ public class ContactList {
     }
 
     public Person[] getContactByRange(String start, String end) {
-        if(end.compareTo(start) > 0){
+        if(start == null || end == null || start.compareTo(end) < 0){
             throw new IllegalArgumentException();
         }
         ArrayList<Person> list = new ArrayList<>();
