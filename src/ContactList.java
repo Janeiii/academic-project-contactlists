@@ -46,7 +46,7 @@ public class ContactList {
         }
         ArrayList<Person> list = new ArrayList<>();
         for (String i : this.map.keySet()) {
-            if(start.compareTo(i) <= 0 &&end.compareTo(i) > 0){
+            if(start.compareTo(i) <= 0 &&end.compareTo(i) < 0){
                 list.add(this.map.get(i));
             }
         }
