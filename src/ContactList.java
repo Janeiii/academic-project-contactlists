@@ -44,10 +44,9 @@ public class ContactList {
         if(start == null || end == null || start.compareTo(end) >= 0){
             throw new IllegalArgumentException();
         }
-
         ArrayList<Person> list = new ArrayList<>();
         for (String i : this.map.keySet()) {
-            if( (start.compareTo(i) <= 0 ) && (end.compareTo(i) < 0) ){
+            if( (i.compareTo(start) >= 0 ) && (i.compareTo(end) < 0) ){
                 list.add(this.map.get(i));
             }
         }
