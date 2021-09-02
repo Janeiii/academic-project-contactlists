@@ -1,69 +1,54 @@
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class ContactListTest {
 
-    private ContactList lst;
-    private Person asd;
-    private Person zxc;
+    private ArrayList<String> phone1;
+    private ContactList book;
+    private Person a;
 
-    @Before
+    @org.junit.Before
     public void setUp() throws Exception {
-        ArrayList<String> a = new ArrayList<String>();
-        a.add("916");
-        a.add("216");
-
-        ArrayList<String> b = new ArrayList<String>();
-        b.add("916");
-        b.add("287");
-        b.add("965");
-
-        lst = new ContactList();
-
-        asd = new Person("asd",a);
-        zxc = new Person("zcx",b);
+        phone1 = new ArrayList<>();
+        phone1.add("916");
+        phone1.add("542");
+        phone1.add("698");
+        a = new Person("A",phone1);
+        book = new ContactList();
     }
 
-    @Test
+    @org.junit.Test
     public void createContact() {
-
-        assertTrue(lst.createContact(asd));
-        assertFalse(lst.createContact(asd));
-        assertTrue(lst.createContact(zxc));
-
-
+        book.createContact(a);
+        System.out.println(book.lookupContact("B"));
 
     }
 
-    @Test
+    @org.junit.Test
     public void lookupContact() {
     }
 
-    @Test
+    @org.junit.Test
     public void getContact() {
     }
 
-    @Test
+    @org.junit.Test
     public void getContactByRange() {
     }
 
-    @Test
+    @org.junit.Test
     public void deleteContact() {
     }
 
-    @Test
+    @org.junit.Test
     public void size() {
     }
 
-    @Test
+    @org.junit.Test
     public void fetchAllNames() {
     }
 
-    @Test
+    @org.junit.Test
     public void fetchAllPhoneNumbers() {
     }
 }
